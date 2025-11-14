@@ -1,9 +1,9 @@
 //core orderbook logic goes here, states, and updates 
-use std::collections::{VecDeque}
-
-struct Order {
-    id: int, 
-    price: double, 
-    quantity: int, 
-    order_history = Vec::new(), 
+use std::vec::Vec; 
+//rust is automatically set as private, so set everything as pub to make it public
+pub struct Order {
+    pub id: i32, 
+    pub price: f64, 
+    pub quantity: i32, 
+    pub order_history: Vec<String>, 
 }
