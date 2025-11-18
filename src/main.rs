@@ -1,17 +1,16 @@
 mod order;
+mod book;
+
 use crate::order::Order;
+use crate::book::Book;
 
 fn main() {
-    println!("Hello, world!");
+    // Test code for order
+    println!("Welcome to the Order Book designed and implemented by Yifan Luo and Suhaan Khan");
 
-    let user1 =  Order {
-        id: 1,   
-        price: 30.40, 
-        quantity: 8, 
-        order_history: Vec::new(), 
-    };
+    let mut new_order_book: Book = Book::new(
+        "APPL".to_string(),
+    );
 
-    println!("{}", user1.id);
-    println!("{}", user1.price); 
-    println!("{}", user1.quantity);
+    new_order_book.add_ask(1, "Yifan".to_string(), 267.44, 100);
 }
