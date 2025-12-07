@@ -29,6 +29,10 @@ impl Book {
         }
     }
 
+    pub fn get_orders(&self) -> &Vec<Order> {
+        &self.orders
+    }
+
     pub fn add_order(&mut self, order_type: Type, id: i32, owner: String, price: f64, quantity: i32) {
         // add order logic
         let new_order = Order {
@@ -57,3 +61,6 @@ impl Book {
         self.add_order(Type::Ask, id, owner, price, quantity);
     }
 }
+
+ 
+
