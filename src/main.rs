@@ -4,7 +4,6 @@ mod book;
 use crate::order::Order;
 use crate::book::Book;
 
-use rand::Rng; 
 use std::io; 
 
 fn print_menu() {
@@ -16,7 +15,7 @@ fn print_menu() {
     println!(" 1) View Order Book \n 2) Buy \n 3) Sell \n 4) Quit\n"); 
 }
 
-fn handle_buy(book: &mut Book, id: i32) {
+fn handle_buy(book: &mut Book, id: &mut i32) {
     println!("Please enter order in format: <qty> <price> <username>"); 
     
     let mut input: String = String::new(); 
@@ -34,12 +33,13 @@ fn handle_buy(book: &mut Book, id: i32) {
     let owner : &str = parts[2].trim();
 
     //must add owner functionality later
-    book.add_bid(id, owner.to_string(), price, quantity);
+    book.add_bid(*id, owner.to_string(), price, quantity);
 
     println!("Your buy order has been added!"); 
+    *id += 1; 
 }
 
-fn handle_sell(book: &mut Book, id: i32) {
+fn handle_sell(book: &mut Book, id: &mut i32) {
     println!("Please enter order in format: <qty> <price> <username>"); 
     
     let mut input: String = String::new(); 
@@ -57,9 +57,10 @@ fn handle_sell(book: &mut Book, id: i32) {
     let owner : &str = parts[2].trim();
 
     //must add owner functionality later
-    book.add_ask(id, owner.to_string(), price, quantity);
+    book.add_ask(*id, owner.to_string(), price, quantity);
 
     println!("Your ask order has been added!"); 
+    *id += 1; 
 }
 
 fn view_history(book : &Book) {
@@ -77,10 +78,7 @@ fn main() {
         "APPL".to_string(),
     );
 
-    let mut rng = rand::thread_rng(); 
-    let id: i32 = rng.gen_range(1..=100); 
-    
-    new_order_book.add_ask(1, "Yifan".to_string(), 267.44, 100);
+    let mut id: i32 = 1; 
     
     loop {
         print_menu(); 
@@ -91,8 +89,8 @@ fn main() {
         let num: i32 = input.trim().parse().expect("Invalid Character Entered: Please enter a number from 1-4"); 
         match num {
             1 => view_history(&new_order_book), 
-            2 => handle_buy(&mut new_order_book, id),  
-            3 => handle_sell(&mut new_order_book, id), 
+            2 => handle_buy(&mut new_order_book, &mut id),  
+            3 => handle_sell(&mut new_order_book, &mut id), 
             4 => {
                     println!("See you later...");
                     break; 
