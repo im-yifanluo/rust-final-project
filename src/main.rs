@@ -1,8 +1,8 @@
 mod order;
 mod book;
+mod types;
 
-use crate::order::Order;
-use crate::book::Book;
+use crate::types::{Order, Type, Book, Trade};
 
 use rand::Rng; 
 use std::io; 
@@ -35,7 +35,7 @@ fn handle_buy(book: &mut Book) {
     }
 
     let quantity : i32 = parts[0].trim().parse().expect("Invalid Quantity");
-    let price : f64 = parts[1].trim().parse().expect("Invalid Price");
+    let price : i32 = parts[1].trim().parse().expect("Invalid Price");
 
     //must add owner functionality later
     book.add_bid(id, owner.to_string(), price, quantity);
@@ -51,7 +51,7 @@ fn main() {
         "APPL".to_string(),
     );
 
-    new_order_book.add_ask(1, "Yifan".to_string(), 267.44, 100);
+    new_order_book.add_ask(1, "Yifan".to_string(), 267, 100);
     
     
     print_menu(); 

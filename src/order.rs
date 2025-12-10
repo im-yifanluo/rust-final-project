@@ -1,20 +1,6 @@
 //core orderbook logic goes here, states, and updates 
 //rust is automatically set as private, so set everything as pub to make it public
-
-#[derive(Clone, PartialEq, Eq)]
-pub enum Type {
-    Bid,
-    Ask,
-}
-
-#[derive(Clone)]
-pub struct Order {
-    pub id: i32, 
-    pub owner: String,
-    pub price: f64, 
-    pub quantity: i32, 
-    pub order_type: Type,
-}
+use crate::types::{Order, Type};
 
 impl Type {
     fn eq(&self, other: Type) -> bool {
@@ -23,5 +9,22 @@ impl Type {
             (Type::Ask, Type::Ask) => true,
             _ => false,
         }
+    }
+}
+
+impl Order {
+    pub fn new(id: i32, owner: String, price_cent: i32, quantity: i32, order_type: Type) -> Order {
+        Order {
+            id,
+            owner,
+            price_cent,
+            quantity,
+            order_type,
+        }
+    }
+
+    // Function that converts the price in cents to dollar
+    pub fn price_dollar(&self) -> f64 {
+        self.price_cent as f64 / 100.0
     }
 }
