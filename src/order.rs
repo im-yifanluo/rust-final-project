@@ -2,13 +2,15 @@
 //rust is automatically set as private, so set everything as pub to make it public
 use crate::types::{Order, Type};
 
+use std::fmt;
+
 impl fmt::Display for Order {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let tp = match self.order_type {
             Type::Bid => "BUY", 
             Type::Ask => "SELL",
         };
-        write!(f, "{} | {} | {} @ {} | {}", self.id, self.owner, tp, self.price, self.quantity)
+        write!(f, "{} | {} | {} @ {} | {}", self.id, self.owner, tp, self.price_dollar(), self.quantity)
     }
 }
 
