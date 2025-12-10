@@ -1,8 +1,8 @@
 mod order;
 mod book;
+mod types;
 
-use crate::order::Order;
-use crate::book::Book;
+use crate::types::{Order, Type, Book, Trade};
 
 use std::io; 
 
