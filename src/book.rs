@@ -219,7 +219,7 @@ impl Book {
         let highest_bid = self.bids.first_key_value().unwrap();
 
         // Case 2: If the prices do not cross
-        if ask_order.price_cent >highest_bid.1.price_cent {
+        if ask_order.price_cent > highest_bid.1.price_cent {
             self.asks.insert(ask_order.price_cent, ask_order);
             return None;
         }
@@ -350,10 +350,6 @@ impl Book {
 
     pub fn get_orders(&self) -> &Vec<Order> {
         &self.orders
-    }
-
-    pub fn get_trades(&self) -> &Vec<Trade> {
-        &self.trades
     }
     
     pub fn get_bids(&self) -> &BTreeMap<Reverse<i32>, Order> {

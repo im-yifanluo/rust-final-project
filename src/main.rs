@@ -32,10 +32,23 @@ fn handle_buy(book: &mut Book, id: &mut i32) {
     let price_cent : i32 = parts[1].trim().parse().expect("Invalid Price");
     let owner : &str = parts[2].trim();
 
-    //must add owner functionality later
-    book.add_bid(*id, owner.to_string(), price_cent, quantity);
+    let trades_vec = book.add_bid(*id, owner.to_string(), price_cent, quantity);
 
-    println!("Your buy order has been added!"); 
+    match trades_vec {
+        Some(trades) => {
+            for trade in trades {
+                 println!("A trade has successfully occurred between {} (buyer) and {} (seller) for {} shares at ${:.2}!",
+                    trade.bid_order_id, 
+                    trade.ask_order_id,
+                    trade.quantity,
+                    trade.price as f64 / 100 as f64, 
+                );
+            }
+        }
+        None => {
+          println!("Your buy order has been added!"); 
+        }
+    }
     *id += 1; 
 }
 
@@ -56,10 +69,23 @@ fn handle_sell(book: &mut Book, id: &mut i32) {
     let price_cent : i32 = parts[1].trim().parse().expect("Invalid Price");
     let owner : &str = parts[2].trim();
 
-    //must add owner functionality later
-    book.add_ask(*id, owner.to_string(), price_cent, quantity);
+    let trades_vec = book.add_ask(*id, owner.to_string(), price_cent, quantity);
 
-    println!("Your ask order has been added!"); 
+     match trades_vec {
+        Some(trades) => {
+            for trade in trades {
+                 println!("A trade has successfully occurred between {} (buyer) and {} (seller) for {} shares at ${:.2}!",
+                    trade.bid_order_id, 
+                    trade.ask_order_id,
+                    trade.quantity,
+                    trade.price as f64 / 100 as f64, 
+                );
+            }
+        }
+        None => {
+          println!("Your ask order has been added!"); 
+        }
+    }
     *id += 1; 
 }
 
