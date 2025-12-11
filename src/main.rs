@@ -12,7 +12,7 @@ fn print_menu() {
     println!(" Order Book Menu ");
     println!("===============================");
     println!("What would you like to do today?"); 
-    println!(" 1) View Order Book \n 2) Buy \n 3) Sell \n 4) Quit\n"); 
+    println!(" 1) View Order Book \n 2) Buy \n 3) Sell \n 4) View Asks \n 5) View Bids \n 6) Quit\n"); 
 }
 
 fn handle_buy(book: &mut Book, id: &mut i32) {
@@ -70,6 +70,21 @@ fn view_history(book : &Book) {
     }
 }
 
+fn view_asks(book: &Book) {
+    println!(" ===== Asks ===== "); 
+    for (price, ord) in book.get_asks() {
+        println!("price: {} | order: {}", *price as f64 / 100 as f64, ord); 
+    }
+}
+
+fn view_bids(book: &Book) {
+    println!(" ===== Bids ===== "); 
+    for (price, ord) in book.get_bids() {
+        let price = price.0; 
+        println!("price: {} | order: {}", price as f64 / 100 as f64, ord); 
+    }
+}
+
 fn main() {
     // Test code for order
     println!("Welcome to the Order Book designed and implemented by Suhaan Khan and Yifan Luo!");
@@ -91,7 +106,9 @@ fn main() {
             1 => view_history(&new_order_book), 
             2 => handle_buy(&mut new_order_book, &mut id),  
             3 => handle_sell(&mut new_order_book, &mut id), 
-            4 => {
+            4 => view_asks(&new_order_book),
+            5 => view_bids(&new_order_book),
+            6 => {
                     println!("See you later...");
                     break; 
                  },

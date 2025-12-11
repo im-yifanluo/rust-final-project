@@ -347,4 +347,22 @@ impl Book {
         
         Some(new_trades)
     }
+
+    pub fn get_orders(&self) -> &Vec<Order> {
+        &self.orders
+    }
+
+    pub fn get_trades(&self) -> &Vec<Trade> {
+        &self.trades
+    }
+    
+    pub fn get_bids(&self) -> &BTreeMap<Reverse<i32>, Order> {
+        &self.bids
+    }
+    
+    pub fn get_asks(&self) -> &BTreeMap<i32, Order> {
+        &self.asks
+    }
 }
+
+
