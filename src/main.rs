@@ -1,8 +1,8 @@
 mod order;
 mod book;
+mod types;
 
-use crate::order::Order;
-use crate::book::Book;
+use crate::types::{Order, Type, Book, Trade};
 
 use std::io; 
 
@@ -16,48 +16,48 @@ fn print_menu() {
 }
 
 fn handle_buy(book: &mut Book, id: &mut i32) {
-    println!("Please enter order in format: <qty> <price> <username>"); 
+    println!("Please enter order in format: <qty> <price_in_cents> <username>"); 
     
     let mut input: String = String::new(); 
     println!(">>>");
-    io::stdin().read_line(&mut input).expect("Invalid Format, pelase enter in <qty> <price> <username> (eg.: 3 50 Suhaan)"); 
+    io::stdin().read_line(&mut input).expect("Invalid Format, pelase enter in <qty> <price_in_cents> <username> (eg.: 3 50 Suhaan)"); 
 
     let parts: Vec<&str> = input.trim().split_whitespace().collect(); 
     if parts.len() != 3 {
-        println!("Invalid Format, pelase enter in <qty> <price> (eg.: 3 50 Suhaan)");
+        println!("Invalid Format, pelase enter in <qty> <price_in_cents> <username> (eg.: 3 50 Suhaan)");
         return; 
     }
 
     let quantity : i32 = parts[0].trim().parse().expect("Invalid Quantity");
-    let price : f64 = parts[1].trim().parse().expect("Invalid Price");
+    let price_cent : i32 = parts[1].trim().parse().expect("Invalid Price");
     let owner : &str = parts[2].trim();
 
     //must add owner functionality later
-    book.add_bid(*id, owner.to_string(), price, quantity);
+    book.add_bid(*id, owner.to_string(), price_cent, quantity);
 
     println!("Your buy order has been added!"); 
     *id += 1; 
 }
 
 fn handle_sell(book: &mut Book, id: &mut i32) {
-    println!("Please enter order in format: <qty> <price> <username>"); 
+    println!("Please enter order in format: <qty> <price_in_cents> <username>"); 
     
     let mut input: String = String::new(); 
     println!(">>>");
-    io::stdin().read_line(&mut input).expect("Invalid Format, pelase enter in <qty> <price> (eg.: 3 50 Suhaan)"); 
+    io::stdin().read_line(&mut input).expect("Invalid Format, pelase enter in <qty> <price_in_cents> <username> (eg.: 3 50 Suhaan)"); 
 
     let parts: Vec<&str> = input.trim().split_whitespace().collect(); 
     if parts.len() != 3 {
-        println!("Invalid Format, pelase enter in <qty> <price> (eg.: 3 50 Suhaan)");
+        println!("Invalid Format, pelase enter in <qty> <price_in_cents> <username> (eg.: 3 50 Suhaan)");
         return; 
     }
 
     let quantity : i32 = parts[0].trim().parse().expect("Invalid Quantity");
-    let price : f64 = parts[1].trim().parse().expect("Invalid Price");
+    let price_cent : i32 = parts[1].trim().parse().expect("Invalid Price");
     let owner : &str = parts[2].trim();
 
     //must add owner functionality later
-    book.add_ask(*id, owner.to_string(), price, quantity);
+    book.add_ask(*id, owner.to_string(), price_cent, quantity);
 
     println!("Your ask order has been added!"); 
     *id += 1; 
