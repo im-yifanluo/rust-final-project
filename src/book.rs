@@ -3,13 +3,8 @@ use std::{collections::BTreeMap, vec::Vec, cmp::Reverse};
 use crate::{types::{Book, Order, Trade, Type}};
 
 impl Trade {
-    pub fn new(bid_order_id: i32, ask_order_id: i32, price: i32, quantity: i32) -> Trade {
-        Trade {
-            bid_order_id,
-            ask_order_id,
-            price,
-            quantity,
-        }
+    pub fn price_dollar(&self) -> f64 {
+        self.price as f64 / 100.0
     }
 }
 
@@ -31,15 +26,6 @@ impl Book {
     */
 
     // ============ Adding Orders =============
-    pub fn add_order(&mut self, order_type: Type, id: i32, owner: String, price: i32, quantity: i32) -> Option<Vec<Trade>> {
-        // add order logic
-        if order_type == Type::Bid {
-            return self.add_bid(id, owner, price, quantity);
-        }
-
-        return self.add_ask(id, owner, price, quantity);
-    }
-
     pub fn add_bid(&mut self, id: i32, owner: String, price: i32, quantity: i32) -> Option<Vec<Trade>> {
         let new_order = Order {
             id: id,
@@ -352,6 +338,10 @@ impl Book {
         &self.orders
     }
     
+    pub fn get_trades(&self) -> &Vec<Trade> {
+        &self.trades
+    }
+
     pub fn get_bids(&self) -> &BTreeMap<Reverse<i32>, Order> {
         &self.bids
     }
